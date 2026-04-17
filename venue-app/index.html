@@ -14,19 +14,19 @@
 </head>
   <body>
     <div id="app">
-      <!-- Admin Toggle for Prototype -->
-      <a href="/admin.html" class="admin-badge">
-          Admin Portal <ion-icon name="arrow-forward-outline"></ion-icon>
-      </a>
+    <!-- Admin Toggle for Prototype -->
+    <a href="/admin.html" class="admin-badge">
+        Admin Portal <ion-icon name="arrow-forward-outline"></ion-icon>
+    </a>
 
-      <!-- Header -->
-      <header>
-        <div class="user-greeting">
-          <h1>MatchDay Pro</h1>
-          <p id="headerSubtitle">Section 114 • Row G • Seat 12</p>
-        </div>
-        <div class="profile-avatar">J</div>
+    <!-- Header -->
+    <!-- Semantic Entry Point -->
+    <main id="app">
+      <header class="header">
+        <h1 tabindex="0" aria-label="Welcome to MatchDay Pro">MatchDay Pro</h1>
+        <p id="headerSubtitle" aria-live="polite">Section 114 • Row G • Seat 12</p>
       </header>
+      <div class="profile-avatar">J</div>
 
       <!-- VIEW CONTROLLER -->
       <div id="view-home" class="view-panel active">
@@ -155,24 +155,24 @@
       </div>
 
       <!-- AI Assistant -->
-      <div class="ai-fab" id="aiFab">✨</div>
-      <div class="ai-chat-panel" id="aiChat">
+      <button class="ai-fab" id="aiFab" aria-label="Open MatchDay Smart Assistant" tabindex="0">✨</button>
+      <section class="ai-chat-panel" id="aiChat" aria-label="Chatbot window" aria-hidden="true">
           <div class="ai-chat-header">
               <h3>MatchDay Assistant <span>Gemini AI</span></h3>
-              <ion-icon name="close-outline" id="aiClose" style="cursor: pointer; font-size: 18px;"></ion-icon>
+              <ion-icon name="close-outline" id="aiClose" role="button" aria-label="Close Chat" style="cursor: pointer; font-size: 18px;" tabindex="0"></ion-icon>
           </div>
-          <div class="ai-chat-body" id="chatBody">
+          <div class="ai-chat-body" id="chatBody" aria-live="polite">
               <div class="chat-msg bot">Hi Jordan! I'm your MatchDay AI. Ask me about stadium lines, express routes, or facility locations!</div>
           </div>
           <div class="ai-chat-input">
-              <input type="text" id="chatInput" placeholder="Try 'Where is the restroom?'">
-              <button id="chatSend"><ion-icon name="send-outline"></ion-icon></button>
+              <input type="text" id="chatInput" placeholder="Try 'Where is the restroom?'" aria-label="Ask the AI a question">
+              <button id="chatSend" aria-label="Send Message"><ion-icon name="send-outline"></ion-icon></button>
           </div>
-      </div>
+      </section>
 
       <!-- Bottom Nav -->
-      <nav class="bottom-nav" id="bottomNav">
-        <div class="nav-item active" data-target="view-home">
+      <nav class="bottom-nav" id="bottomNav" aria-label="Main Navigation">
+        <button class="nav-item active" data-target="view-home" aria-label="Home page view">
           <ion-icon name="home-outline" class="nav-icon"></ion-icon>
           <span class="nav-label">Home</span>
         </div>

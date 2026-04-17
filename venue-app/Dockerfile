@@ -1,17 +1,25 @@
-# Build stage
-FROM node:20-alpine as build
+# Unified Full-Stack Node Environment
+FROM node:20-alpine
+
+# Set the working directory
 WORKDIR /app
+
+# Copy dependency graphs and configure production
 COPY package*.json ./
+RUN npm install --omit=dev
+
+# In Vite, depending on if it's placed in devDependencies, we need to run full install first
 RUN npm install
+
+# Copy application payload
 COPY . .
+
+# Generate the highly optimized Vite distribution bundle
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
-# Copy the built optimal static files to nginx serving directory
-COPY --from=build /app/dist /usr/share/nginx/html
+# Expose strict production port
+EXPOSE 8080
+ENV PORT=8080
 
-# Copy a custom nginx configuration to route correctly (optional for SPA, but good practice)
-# We will just expose port 80 and let default nginx handle the static files
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Execute server boot
+CMD ["node", "server.js"]
