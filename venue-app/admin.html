@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchDay Pro - Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Chart.js will be loaded via JS -->
+    <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h1>MatchDay<span>OS</span></h1>
+                <p>Command Center</p>
+            </div>
+            <nav class="side-nav">
+                <a href="#" class="nav-item active"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+                <a href="#" class="nav-item"><ion-icon name="people-outline"></ion-icon> Crowd Flow</a>
+                <a href="#" class="nav-item"><ion-icon name="restaurant-outline"></ion-icon> Concessions</a>
+                <a href="#" class="nav-item"><ion-icon name="warning-outline"></ion-icon> Alerts & Security</a>
+            </nav>
+            <div class="bottom-actions">
+                <a href="/index.html" class="switch-app-btn"><ion-icon name="phone-portrait-outline"></ion-icon> Attendee View</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search areas, cameras, staff...">
+                </div>
+                <div class="header-actions">
+                    <div class="system-status"><span class="pulse-dot"></span> System Normal</div>
+                    <div class="admin-profile">
+                        <span>Admin</span>
+                        <div class="avatar">A</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Large Map Card -->
+                <div class="card map-card span-2-col span-2-row">
+                    <div class="card-header">
+                        <h2>Live Venue Heatmap & Tracking</h2>
+                        <button class="btn-primary" id="broadcastAlertBtn">Broadcast Push Alert</button>
+                    </div>
+                    <div class="admin-map-container">
+                        <img src="/stadium_map.png" alt="Venue Map" class="admin-map-bg">
+                        <div class="admin-map-overlay" id="adminMapOverlay">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="card stat-card">
+                    <div class="stat-icon" style="color: var(--accent-cyan); background: rgba(0, 229, 255, 0.1);"><ion-icon name="people"></ion-icon></div>
+                    <div class="stat-info">
+                        <h3>Total Attendance</h3>
+                        <h2>42,591 <span class="trend up">+2%</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-icon" style="color: var(--accent-purple); background: rgba(179, 56, 255, 0.1);"><ion-icon name="timer"></ion-icon></div>
+                    <div class="stat-info">
+                        <h3>Avg Wait Time</h3>
+                        <h2>12 min <span class="trend down">-4 min</span></h2>
+                    </div>
+                </div>
+
+                <!-- Chart Card -->
+                <div class="card chart-card span-2-col">
+                    <div class="card-header">
+                        <h2>Concession Queue Volumes (Live)</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="queueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Alerts Log -->
+                <div class="card alerts-card">
+                    <div class="card-header">
+                        <h2>Security & Alerts Log</h2>
+                    </div>
+                    <div class="alerts-list">
+                        <div class="alert-item high">
+                            <ion-icon name="warning"></ion-icon>
+                            <div class="alert-content">
+                                <h4>Bottleneck at Gate East</h4>
+                                <p>Density exceeded 90% capacity.</p>
+                                <span>2 min ago</span>
+                            </div>
+                            <button class="btn-outline">Dispatch Staff</button>
+                        </div>
+                        <div class="alert-item med">
+                            <ion-icon name="water"></ion-icon>
+                            <div class="alert-content">
+                                <h4>Spill Reported</h4>
+                                <p>Section 114, Row G. Needs cleaning.</p>
+                                <span>8 min ago</span>
+                            </div>
+                            <button class="btn-outline">Dispatch</button>
+                        </div>
+                        <div class="alert-item low">
+                            <ion-icon name="shirt"></ion-icon>
+                            <div class="alert-content">
+                                <h4>Merch Restocked</h4>
+                                <p>North store received new jerseys.</p>
+                                <span>15 min ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert Modal -->
+    <div class="modal-overlay" id="alertModal">
+        <div class="modal-content">
+            <h2>Broadcast Smart Alert</h2>
+            <p>Send a push notification to all attendees in a specific zone.</p>
+            <div class="form-group">
+                <label>Target Zone</label>
+                <select>
+                    <option>All Zones</option>
+                    <option>East Gate Appr</option>
+                    <option>Concourse Level 1</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Message Content</label>
+                <textarea rows="3">East Gate is currently experiencing delays. Please route to North or West gates for faster entry.</textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-outline" id="cancelModal">Cancel</button>
+                <button class="btn-primary" id="sendAlert">Send Broadcast Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/admin.js"></script>
+</body>
+</html>

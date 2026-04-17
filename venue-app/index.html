@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+    <title>MatchDay Pro - Attendee App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+  <body>
+    <div id="app">
+      <!-- Admin Toggle for Prototype -->
+      <a href="/admin.html" class="admin-badge">
+          Admin Portal <ion-icon name="arrow-forward-outline"></ion-icon>
+      </a>
+
+      <!-- Header -->
+      <header>
+        <div class="user-greeting">
+          <h1>MatchDay Pro</h1>
+          <p id="headerSubtitle">Section 114 • Row G • Seat 12</p>
+        </div>
+        <div class="profile-avatar">J</div>
+      </header>
+
+      <!-- VIEW CONTROLLER -->
+      <div id="view-home" class="view-panel active">
+          <div class="content">
+            <div class="live-alert" id="liveAlert">
+              <div class="live-alert-icon"></div>
+              <div class="live-alert-text">East Gate crowd cleared. Fastest exit route updated!</div>
+            </div>
+
+            <!-- Mini Map Section -->
+            <section>
+              <div class="section-title">
+                Smart Wayfinding
+                <span class="badge" id="crowdStatus">Live: Moderate</span>
+              </div>
+              <div class="map-container" id="miniMapTrigger">
+                <img src="/stadium_map.png" alt="Stadium Map" class="map-bg" id="stadiumMap">
+                <div class="map-overlay" id="mapOverlay"></div>
+                <div class="map-controls">
+                  <button class="map-btn" id="refreshMap"><ion-icon name="refresh-outline"></ion-icon></button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Express Queuing Section -->
+            <section>
+              <div class="section-title">Active Orders & Virtual Queues</div>
+              <div class="glass-panel queue-ticket">
+                <div class="queue-header">
+                  <div class="queue-vendor">Burger Stadium Grill 🍔</div>
+                  <div class="queue-status">Preparing</div>
+                </div>
+                <div class="queue-details">
+                  <div class="queue-eta">
+                    <span>Estimated Wait</span>
+                    <span id="etaTime">8 min</span>
+                  </div>
+                  <button class="action-btn" id="pickupBtn">Show QR</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Feature Grid -->
+            <section class="features-grid">
+              <div class="glass-panel feature-card">
+                <div class="feature-icon" style="color: var(--accent-cyan)"><ion-icon name="fast-food-outline"></ion-icon></div>
+                <div><h3>Express Concessions</h3><p>Order to seat or express pickup</p></div>
+              </div>
+              <div class="glass-panel feature-card">
+                <div class="feature-icon" style="color: var(--accent-purple)"><ion-icon name="water-outline"></ion-icon></div>
+                <div><h3>Restroom Wait-list</h3><p>Join virtual queue nearby</p></div>
+              </div>
+              <div class="glass-panel feature-card" id="merchCard">
+                <div class="feature-icon" style="color: var(--accent-green)"><ion-icon name="shirt-outline"></ion-icon></div>
+                <div><h3>Exclusive Merch</h3><p>Limited drops in Area 4 (Live)</p></div>
+              </div>
+              <div class="glass-panel feature-card">
+                <div class="feature-icon" style="color: var(--accent-red)"><ion-icon name="alert-circle-outline"></ion-icon></div>
+                <div><h3>Issue Reporter</h3><p>Spill, broken seat, security</p></div>
+              </div>
+            </section>
+          </div>
+      </div>
+
+      <!-- MAP VIEW -->
+      <div id="view-map" class="view-panel">
+          <div class="full-map-wrapper">
+              <img src="/stadium_map.png" alt="Full Map View" class="full-map-img">
+              <div class="map-overlay" id="fullMapOverlay"></div>
+              <div class="floating-map-actions">
+                  <button class="action-btn" style="border-radius: 20px;"><ion-icon name="locate-outline"></ion-icon> My Seat</button>
+                  <button class="action-btn" style="border-radius: 20px; background: var(--bg-surface-elevated); color: var(--text-primary)"><ion-icon name="restaurant-outline"></ion-icon> Food</button>
+              </div>
+          </div>
+      </div>
+
+      <!-- TICKETS VIEW -->
+      <div id="view-tickets" class="view-panel">
+          <div class="content" style="align-items: center; justify-content: center; height: 100%; display: flex;">
+              <div class="glass-panel ticket-pass">
+                  <h2>Weekend Finals Pass</h2>
+                  <p>Gate A • Sep 24, 2026</p>
+                  <div class="barcode-container">
+                      <div class="scanner-line"></div>
+                      <!-- Pseudo barcode -->
+                      <div class="barcode">
+                        <div></div><div></div><div class="wide"></div><div></div><div class="wide"></div>
+                        <div></div><div class="wide"></div><div></div><div></div><div class="wide"></div>
+                      </div>
+                  </div>
+                  <div class="ticket-seat">Sec 114, Row G, Seat 12</div>
+                  <p style="font-size: 11px; color: var(--accent-green); margin-top: 12px; text-align: center;">✅ NFC Ready</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- PROFILE VIEW -->
+      <div id="view-profile" class="view-panel">
+          <div class="content">
+              <div class="profile-header-large">
+                  <div class="avatar-large">J</div>
+                  <h2>Jordan Doe</h2>
+                  <p>Season Pass Holder</p>
+              </div>
+              <div class="glass-panel settings-list">
+                  <div class="setting-item">
+                      <ion-icon name="wallet-outline"></ion-icon> Payment Methods
+                  </div>
+                  <div class="setting-item">
+                      <ion-icon name="notifications-outline"></ion-icon> Push Notifications
+                  </div>
+                  <div class="setting-item">
+                      <ion-icon name="accessibility-outline"></ion-icon> Accessibility Options
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Toast Notification Container -->
+      <div class="toast" id="toastCard">
+        <div class="toast-icon">✨</div>
+        <div class="toast-content">
+          <h4>Merch Drop Alert!</h4>
+          <p>Exclusive team jersey dropped at North Store. ETA 2 min walk.</p>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-item active" data-target="view-home">
+          <ion-icon name="home-outline" class="nav-icon"></ion-icon>
+          <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item" data-target="view-map">
+          <ion-icon name="map-outline" class="nav-icon"></ion-icon>
+          <span class="nav-label">Map</span>
+        </div>
+        <div class="nav-item" data-target="view-tickets">
+          <ion-icon name="ticket-outline" class="nav-icon"></ion-icon>
+          <span class="nav-label">Tickets</span>
+        </div>
+        <div class="nav-item" data-target="view-profile">
+          <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+          <span class="nav-label">Profile</span>
+        </div>
+      </nav>
+    </div>
+    
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
