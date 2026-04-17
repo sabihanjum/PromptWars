@@ -152,3 +152,54 @@ if(pickupBtn) {
     }
     });
 }
+
+// AI Chatbot Simulation Logic
+const aiFab = document.getElementById('aiFab');
+const aiChat = document.getElementById('aiChat');
+const aiClose = document.getElementById('aiClose');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+const chatBody = document.getElementById('chatBody');
+
+if(aiFab) {
+    aiFab.addEventListener('click', () => aiChat.classList.add('open'));
+    aiClose.addEventListener('click', () => aiChat.classList.remove('open'));
+
+    const addMessage = (text, sender) => {
+        const msg = document.createElement('div');
+        msg.className = `chat-msg ${sender}`;
+        msg.innerText = text;
+        chatBody.appendChild(msg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    };
+
+    const handleChat = () => {
+        const val = chatInput.value.trim().toLowerCase();
+        if(!val) return;
+        
+        addMessage(chatInput.value, 'user');
+        chatInput.value = '';
+
+        // Simulate typing delay
+        setTimeout(() => {
+            let response = "-gemini- I'm not entirely sure, but I can direct you to guest services for more help!";
+            
+            if(val.includes('restroom') || val.includes('bathroom') || val.includes('toilet')) {
+                response = "-gemini- The closest restroom is at Section 118, however, my map shows high traffic. I suggest routing to Section 110 where the wait is 0 mins.";
+            } else if (val.includes('food') || val.includes('hungry') || val.includes('burger')) {
+                response = "-gemini- Burger Stadium Grill has a massive line right now! Would you like me to place an express order to your seat instead?";
+            } else if (val.includes('exit') || val.includes('leave') || val.includes('parking')) {
+                response = "-gemini- Traffic at the East Gate is heavily congested. I recommend an exit route via the North Gate, taking you directly to Parking Level B.";
+            } else if (val.includes('hello') || val.includes('hi')) {
+                response = "-gemini- Hello Jordan! I'm ready to navigate you through the stadium. What do you need?";
+            }
+            
+            addMessage(response, 'bot');
+        }, 800);
+    };
+
+    chatSend.addEventListener('click', handleChat);
+    chatInput.addEventListener('keypress', (e) => { 
+        if(e.key === 'Enter') handleChat(); 
+    });
+}
